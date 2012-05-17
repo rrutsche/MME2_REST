@@ -19,6 +19,10 @@ public class Filter {
 	Date created;
 	Date changed;
 	
+	public Filter(){
+		
+	}
+	
 	public Filter(String name, int brightness, int contrast, int saturation, int red,
 			int green, int blue, boolean negative) {
 		this.name = name;

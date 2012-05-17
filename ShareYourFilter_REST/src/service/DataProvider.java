@@ -12,7 +12,9 @@ public class DataProvider {
 	private DataProvider(){
 		filterList = new ArrayList<Filter>();
 		Filter f = new Filter("NasenFilter", 80, 70, 65, 200, 130, 60, false);
+		Filter fi = new Filter("OhrenFilter", 80, 70, 65, 200, 130, 60, false);
 		filterList.add(f);
+		filterList.add(fi);
 	}
 	
 	static public DataProvider getInstance(){
