@@ -7,7 +7,6 @@ import javax.ws.rs.core.MediaType;
 
 @Path("/filters")
 public class FiltersService {
-	
 	// This method is called if XML is request
 		@GET
 		@Produces(MediaType.TEXT_XML)
