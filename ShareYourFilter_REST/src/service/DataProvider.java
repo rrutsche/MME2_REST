@@ -4,18 +4,20 @@ import java.util.ArrayList;
 
 import domain.Filter;
 
-public class ConnectionManager {
+public class DataProvider {
 	
-	private ConnectionManager instance;
-	ArrayList<Filter> filterList;
+	static private DataProvider instance;
+	static ArrayList<Filter> filterList;
 	
-	private ConnectionManager(){
+	private DataProvider(){
 		filterList = new ArrayList<Filter>();
+		Filter f = new Filter("NasenFilter", 80, 70, 65, 200, 130, 60, false);
+		filterList.add(f);
 	}
 	
-	public ConnectionManager getInstance(){
+	static public DataProvider getInstance(){
 		if(instance == null){
-			instance = new ConnectionManager();
+			instance = new DataProvider();
 			return instance;
 		}else{
 			return instance;
