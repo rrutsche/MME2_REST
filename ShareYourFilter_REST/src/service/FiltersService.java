@@ -15,12 +15,14 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
 
+import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
+
+import util.JSONConverter;
 
 
-import domain.Filter;
+import domain.FilterDto;
 
 @Path("/filters/{name}")
 public class FiltersService {
@@ -35,24 +37,25 @@ public class FiltersService {
 		@GET
 //		@Path("/filters/{name}")
 		@Produces({MediaType.APPLICATION_JSON})
-		public Filter getFilter(@PathParam("name") String name){
-			Filter filter = DataProvider.getInstance().getFilterByName(name);
+		public String getFilter(@PathParam("name") String name) throws JsonGenerationException, JsonMappingException, IOException{
 			System.out.println("################################# GET");
+			
+			FilterDto filter = DataProvider.getInstance().getFilterByName(name);
 			if(null != filter){
-				return filter;
+				return JSONConverter.filterDtoToJson(filter);
 			}
 			return null;
 		}
 		
 		@PUT
 		@Produces(MediaType.TEXT_HTML)
-		public void setFilter(@PathParam("name") String name, String jsontString) throws JsonParseException, JsonMappingException, IOException{
+		public void setFilter(@PathParam("name") String name, String jsonString) throws JsonParseException, JsonMappingException, IOException{
 			System.out.println("################################# PUT");
-			ObjectMapper mapper = DataProvider.getInstance().getMapper();
-			Filter filter = mapper.readValue(jsontString, Filter.class);
-			if(null == DataProvider.getInstance().setFilter(filter)){
+			
+			if(null == DataProvider.getInstance().setFilter(JSONConverter.jsonToFilterDto(jsonString))){
 				System.out.println("Something went wrong while persisting filter object");
 			}
+			
 			System.out.println("FilterList:\n");
 			System.out.println(DataProvider.getInstance().filterListToString());
 		}
@@ -61,23 +64,26 @@ public class FiltersService {
 		@Produces(MediaType.TEXT_HTML)
 		public void updateFilter(@PathParam("name") String name, String jsonString) throws JsonParseException, JsonMappingException, IOException{
 			System.out.println("################################# POST");
-			ObjectMapper mapper = DataProvider.getInstance().getMapper();
-			Filter newFilterObject = mapper.readValue(jsonString, Filter.class);
-			Filter oldFilterObject = DataProvider.getInstance().getFilterByName(name);
 			
-			if (null != oldFilterObject) {
-				oldFilterObject.setName(newFilterObject.getName());
-				oldFilterObject.setBlue(newFilterObject.getBlue());
-				oldFilterObject.setGreen(newFilterObject.getGreen());
-				oldFilterObject.setRed(newFilterObject.getRed());
-				oldFilterObject.setBrightness(newFilterObject.getBrightness());
-				oldFilterObject.setSaturation(newFilterObject.getSaturation());
-				oldFilterObject.setContrast(newFilterObject.getContrast());
-				oldFilterObject.setNegative(newFilterObject.isNegative());
-				System.out.println("oldfilterObject: "+oldFilterObject.toString());
+			FilterDto newFilterObject = JSONConverter.jsonToFilterDto(jsonString);
+			FilterDto oldFilterObject = DataProvider.getInstance().getFilterByName(name);
+			
+			if(DataProvider.getInstance().nameIsUnique(newFilterObject.getName())){
+				if (null != oldFilterObject) {	
+					oldFilterObject.setName(newFilterObject.getName());
+					oldFilterObject.setBlue(newFilterObject.getBlue());
+					oldFilterObject.setGreen(newFilterObject.getGreen());
+					oldFilterObject.setRed(newFilterObject.getRed());
+					oldFilterObject.setBrightness(newFilterObject.getBrightness());
+					oldFilterObject.setSaturation(newFilterObject.getSaturation());
+					oldFilterObject.setContrast(newFilterObject.getContrast());
+					oldFilterObject.setNegative(newFilterObject.isNegative());
+					System.out.println("oldfilterObject: "+oldFilterObject.toString());
+				}else{
+					System.out.println("Something went wrong during filter object update process");
+				}
 			}else{
-				System.out.println("Something went wrong during filter object update process");
-				
+				System.out.println("Filter name is not unique");
 			}
 			System.out.println(DataProvider.getInstance().filterListToString());
 		}
@@ -86,7 +92,9 @@ public class FiltersService {
 		@Produces(MediaType.TEXT_HTML)
 		public void deleteFilter(@PathParam("name") String name){
 			System.out.println("################################# DELETE");
+			
 			DataProvider.getInstance().removeFilter(name);
+			
 			System.out.println("FilterList:\n");
 			System.out.println(DataProvider.getInstance().filterListToString());
 		}

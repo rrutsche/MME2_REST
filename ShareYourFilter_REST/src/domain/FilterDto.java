@@ -2,10 +2,8 @@ package domain;
 
 import java.util.Date;
 
-import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
-public class Filter {
+public class FilterDto {
 	
 	private int id;
 	private String name;
@@ -19,11 +17,11 @@ public class Filter {
 	Date created;
 	Date changed;
 	
-	public Filter(){
+	public FilterDto(){
 		
 	}
 	
-	public Filter(String name, int brightness, int contrast, int saturation, int red,
+	public FilterDto(String name, int brightness, int contrast, int saturation, int red,
 			int green, int blue, boolean negative) {
 		this.name = name;
 		this.brightness = brightness;

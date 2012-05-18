@@ -4,19 +4,19 @@ import java.util.ArrayList;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import domain.Filter;
+import domain.FilterDto;
 
 public class DataProvider {
 	
 	static private DataProvider instance;
-	static ArrayList<Filter> filterList;
+	static ArrayList<FilterDto> filterList;
 	static ObjectMapper mapper; 
 	
 	private DataProvider(){
-		filterList = new ArrayList<Filter>();
+		filterList = new ArrayList<FilterDto>();
 		mapper = new ObjectMapper();
-		Filter f = new Filter("NasenFilter", 80, 70, 65, 200, 130, 60, false);
-		Filter fi = new Filter("OhrenFilter", 80, 70, 65, 200, 130, 60, false);
+		FilterDto f = new FilterDto("NasenFilter", 80, 70, 65, 200, 130, 60, false);
+		FilterDto fi = new FilterDto("OhrenFilter", 80, 70, 65, 200, 130, 60, false);
 		setFilter(f);
 		setFilter(fi);
 	}
@@ -34,22 +34,22 @@ public class DataProvider {
 		return mapper;
 	}
 	
-	public Filter getFilterById(int i){
-		for (Filter filter : filterList) {
+	public FilterDto getFilterById(int i){
+		for (FilterDto filter : filterList) {
 			if(filter.getId() == i) return filter;
 		}
 		return null;
 	}
 	
-	public Filter getFilterByName(String name){
-		for (Filter filter : filterList) {
+	public FilterDto getFilterByName(String name){
+		for (FilterDto filter : filterList) {
 			if(name.equals(filter.getName())) return filter;
 		}
 		return null;
 	}
 	
-	public Filter setFilter(Filter newFilter){
-		for (Filter filter : filterList) {
+	public FilterDto setFilter(FilterDto newFilter){
+		for (FilterDto filter : filterList) {
 			if(newFilter.getName().equals(filter.getName())){
 				return null;
 			}
@@ -61,7 +61,7 @@ public class DataProvider {
 	
 	public String filterListToString(){
 		StringBuilder back = new StringBuilder();
-		for (Filter filter : filterList) {
+		for (FilterDto filter : filterList) {
 			back.append(filter.toString()+"\n");
 		}
 		return back.toString();
@@ -76,5 +76,14 @@ public class DataProvider {
 			System.out.println("filterList after removing object: \n");
 			System.out.println(filterListToString());
 		}
+	}
+	
+	public boolean nameIsUnique(String name){
+		for (FilterDto filter : filterList) {
+			if(name.equals(filter.getName())){
+				return false;
+			}
+		}
+		return true;
 	}
 }
