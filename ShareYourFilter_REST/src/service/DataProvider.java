@@ -2,6 +2,10 @@ package service;
 
 import java.util.ArrayList;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+
 import org.codehaus.jackson.map.ObjectMapper;
 
 import domain.FilterDto;
@@ -11,6 +15,8 @@ public class DataProvider {
 	static private DataProvider instance;
 	static ArrayList<FilterDto> filterList;
 	static ObjectMapper mapper; 
+	static EntityManager em;
+    static EntityTransaction t; 
 	
 	private DataProvider(){
 		filterList = new ArrayList<FilterDto>();
@@ -19,6 +25,8 @@ public class DataProvider {
 		FilterDto fi = new FilterDto("OhrenFilter", 80, 70, 65, 200, 130, 60, false);
 		setFilter(f);
 		setFilter(fi);
+		em = Persistence.createEntityManagerFactory("JpaTest").createEntityManager();
+		t = em.getTransaction();
 	}
 	
 	static public DataProvider getInstance(){
