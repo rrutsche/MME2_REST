@@ -8,6 +8,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import service.DataProvider;
+import domain.Filter;
 import domain.FilterDto;
 
 public class JSONConverter {
@@ -18,8 +19,8 @@ public class JSONConverter {
 		return mapper.writeValueAsString(dto);
 	}
 	
-	public static FilterDto jsonToFilterDto(String jsonString) throws JsonParseException, JsonMappingException, IOException{
-		FilterDto filter = mapper.readValue(jsonString, FilterDto.class);
+	public static Filter jsonToFilter(String jsonString) throws JsonParseException, JsonMappingException, IOException{
+		Filter filter = mapper.readValue(jsonString, Filter.class);
 		return filter;
 	}
 	

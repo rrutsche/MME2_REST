@@ -3,6 +3,7 @@ package service;
 import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
@@ -15,9 +16,10 @@ public class DataProvider {
 	static private DataProvider instance;
 	static ArrayList<FilterDto> filterList;
 	static ObjectMapper mapper; 
-	static EntityManager em;
-    static EntityTransaction t; 
+	static EntityManagerFactory factory;
+    static EntityManager em; 
 	
+
 	private DataProvider(){
 		filterList = new ArrayList<FilterDto>();
 		mapper = new ObjectMapper();
@@ -25,8 +27,8 @@ public class DataProvider {
 		FilterDto fi = new FilterDto("OhrenFilter", 80, 70, 65, 200, 130, 60, false);
 		setFilter(f);
 		setFilter(fi);
-		em = Persistence.createEntityManagerFactory("JpaTest").createEntityManager();
-		t = em.getTransaction();
+		factory = Persistence.createEntityManagerFactory("PersistenceUnit");
+		em = factory.createEntityManager();
 	}
 	
 	static public DataProvider getInstance(){

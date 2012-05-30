@@ -51,10 +51,12 @@ public class FiltersService {
 		@Produces(MediaType.TEXT_HTML)
 		public void setFilter(@PathParam("name") String name, String jsonString) throws JsonParseException, JsonMappingException, IOException{
 			System.out.println("################################# PUT");
+			FilterDao fd = new FilterDao();
+			fd.addFilter(JSONConverter.jsonToFilter(jsonString));
 			
-			if(null == DataProvider.getInstance().setFilter(JSONConverter.jsonToFilterDto(jsonString))){
-				System.out.println("Something went wrong while persisting filter object");
-			}
+//			if(null == DataProvider.getInstance().setFilter(JSONConverter.jsonToFilterDto(jsonString))){
+//				System.out.println("Something went wrong while persisting filter object");
+//			}
 			
 			System.out.println("FilterList:\n");
 			System.out.println(DataProvider.getInstance().filterListToString());
@@ -65,27 +67,27 @@ public class FiltersService {
 		public void updateFilter(@PathParam("name") String name, String jsonString) throws JsonParseException, JsonMappingException, IOException{
 			System.out.println("################################# POST");
 			
-			FilterDto newFilterObject = JSONConverter.jsonToFilterDto(jsonString);
-			FilterDto oldFilterObject = DataProvider.getInstance().getFilterByName(name);
-			
-			if(DataProvider.getInstance().nameIsUnique(newFilterObject.getName())){
-				if (null != oldFilterObject) {	
-					oldFilterObject.setName(newFilterObject.getName());
-					oldFilterObject.setBlue(newFilterObject.getBlue());
-					oldFilterObject.setGreen(newFilterObject.getGreen());
-					oldFilterObject.setRed(newFilterObject.getRed());
-					oldFilterObject.setBrightness(newFilterObject.getBrightness());
-					oldFilterObject.setSaturation(newFilterObject.getSaturation());
-					oldFilterObject.setContrast(newFilterObject.getContrast());
-					oldFilterObject.setNegative(newFilterObject.isNegative());
-					System.out.println("oldfilterObject: "+oldFilterObject.toString());
-				}else{
-					System.out.println("Something went wrong during filter object update process");
-				}
-			}else{
-				System.out.println("Filter name is not unique");
-			}
-			System.out.println(DataProvider.getInstance().filterListToString());
+//			FilterDto newFilterObject = JSONConverter.jsonToFilter(jsonString);
+//			FilterDto oldFilterObject = DataProvider.getInstance().getFilterByName(name);
+//			
+//			if(DataProvider.getInstance().nameIsUnique(newFilterObject.getName())){
+//				if (null != oldFilterObject) {	
+//					oldFilterObject.setName(newFilterObject.getName());
+//					oldFilterObject.setBlue(newFilterObject.getBlue());
+//					oldFilterObject.setGreen(newFilterObject.getGreen());
+//					oldFilterObject.setRed(newFilterObject.getRed());
+//					oldFilterObject.setBrightness(newFilterObject.getBrightness());
+//					oldFilterObject.setSaturation(newFilterObject.getSaturation());
+//					oldFilterObject.setContrast(newFilterObject.getContrast());
+//					oldFilterObject.setNegative(newFilterObject.isNegative());
+//					System.out.println("oldfilterObject: "+oldFilterObject.toString());
+//				}else{
+//					System.out.println("Something went wrong during filter object update process");
+//				}
+//			}else{
+//				System.out.println("Filter name is not unique");
+//			}
+//			System.out.println(DataProvider.getInstance().filterListToString());
 		}
 		
 		@DELETE

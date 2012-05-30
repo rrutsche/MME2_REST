@@ -11,7 +11,7 @@ import javax.persistence.Id;
 public class Filter {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	private int id;
 	private String name;
 	private int brightness;
