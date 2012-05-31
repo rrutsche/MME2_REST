@@ -1,5 +1,8 @@
 package service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -19,9 +22,21 @@ public class FilterDao {
 	}
 
 	public void createFilter(Filter f){
+		
 		EntityTransaction et = em.getTransaction();
+		boolean filterIsUnique = true;
 		et.begin();
-		em.persist(f);
+
+		Filter[] filters = getAll();
+		for (Filter filter : filters) {
+			if (filter.getName().equals(f.getName())){
+				filterIsUnique = false;
+			}
+		}
+		
+		if (filterIsUnique) {
+			em.persist(f);
+		}
 		et.commit();
 		em.close();
 		factory.close();
@@ -34,11 +49,32 @@ public class FilterDao {
 		return null;
 	}
 	
-	public void updateFilter(int id){
+	public void updateFilter(Filter f){
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+		em.merge(f);
+		et.commit();
+		em.close();
+		factory.close();
 		
 	}
 	
 	public void deleteFilter(int id){
 		
+	}
+	
+	public Filter[] getAll() {
+		ArrayList<Filter> filters = new ArrayList<Filter>();
+		
+		List<?> loadedFilters = em.createQuery("select f from Filter f").getResultList();
+		
+		for (Object filter: loadedFilters) {
+			if(filter instanceof Filter){
+				Filter loadedFilter = (Filter) filter;
+				filters.add(loadedFilter);
+				System.out.println(loadedFilter.getName());
+			}
+		}
+		return filters.toArray(new Filter[0]);
 	}
 }

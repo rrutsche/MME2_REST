@@ -67,6 +67,9 @@ public class FiltersService {
 		public void updateFilter(@PathParam("name") String name, String jsonString) throws JsonParseException, JsonMappingException, IOException{
 			System.out.println("################################# POST");
 			
+			FilterDao fd = new FilterDao();
+			fd.updateFilter(JSONConverter.jsonToFilter(jsonString));
+			
 //			FilterDto newFilterObject = JSONConverter.jsonToFilter(jsonString);
 //			FilterDto oldFilterObject = DataProvider.getInstance().getFilterByName(name);
 //			

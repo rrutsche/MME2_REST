@@ -20,7 +20,7 @@ public class Filter implements Serializable{
 	private static final long serialVersionUID = -8665182375873062581L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue
 	private long id;
 	
 	private String name;
