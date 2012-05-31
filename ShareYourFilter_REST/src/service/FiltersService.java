@@ -52,7 +52,7 @@ public class FiltersService {
 		public void setFilter(@PathParam("name") String name, String jsonString) throws JsonParseException, JsonMappingException, IOException{
 			System.out.println("################################# PUT");
 			FilterDao fd = new FilterDao();
-			fd.addFilter(JSONConverter.jsonToFilter(jsonString));
+			fd.createFilter(JSONConverter.jsonToFilter(jsonString));
 			
 //			if(null == DataProvider.getInstance().setFilter(JSONConverter.jsonToFilterDto(jsonString))){
 //				System.out.println("Something went wrong while persisting filter object");

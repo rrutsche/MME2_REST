@@ -1,18 +1,28 @@
 package domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
-public class Filter {
+public class Filter implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8665182375873062581L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+	
 	private String name;
 	private int brightness;
 	private int contrast;
@@ -21,7 +31,10 @@ public class Filter {
 	private int green;
 	private int blue;
 	private boolean negative;
+	
+	@Temporal(TemporalType.DATE)
 	Date created;
+	@Temporal(TemporalType.DATE)
 	Date changed;
 	
 	
@@ -45,17 +58,14 @@ public class Filter {
 	public String getName() {
 		return name;
 	}
-
+	
+	
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public int getId() {
-		return id;
-	}
 	
-	public void setId(int i){
-		this.id = i;
+	public long getId() {
+		return id;
 	}
 
 	private Date getCurrentDate(){
@@ -132,5 +142,15 @@ public class Filter {
 	public Date getChanged() {
 		return changed;
 	}
+
+	@Override
+	public String toString() {
+		return "Filter [id=" + id + ", name=" + name + ", brightness="
+				+ brightness + ", contrast=" + contrast + ", saturation="
+				+ saturation + ", red=" + red + ", green=" + green + ", blue="
+				+ blue + ", negative=" + negative + ", created=" + created
+				+ ", changed=" + changed + "]";
+	}
+	
 	
 }

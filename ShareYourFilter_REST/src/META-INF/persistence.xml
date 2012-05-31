@@ -8,8 +8,8 @@
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url" 	value="jdbc:mysql://localhost:3306/share_your_filter" />
-			<property name="javax.persistence.jdbc.user" value="test" />
-			<property name="javax.persistence.jdbc.password" value="test" />
+			<property name="javax.persistence.jdbc.user" value="nasenbaer" />
+			<property name="javax.persistence.jdbc.password" value="nasenbaer" />
 
 			<!-- EclipseLink should create the database schema automatically -->
 			<property name="eclipselink.ddl-generation" value="create-tables" />

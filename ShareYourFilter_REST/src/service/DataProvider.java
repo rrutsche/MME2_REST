@@ -23,12 +23,6 @@ public class DataProvider {
 	private DataProvider(){
 		filterList = new ArrayList<FilterDto>();
 		mapper = new ObjectMapper();
-		FilterDto f = new FilterDto("NasenFilter", 80, 70, 65, 200, 130, 60, false);
-		FilterDto fi = new FilterDto("OhrenFilter", 80, 70, 65, 200, 130, 60, false);
-		setFilter(f);
-		setFilter(fi);
-		factory = Persistence.createEntityManagerFactory("PersistenceUnit");
-		em = factory.createEntityManager();
 	}
 	
 	static public DataProvider getInstance(){

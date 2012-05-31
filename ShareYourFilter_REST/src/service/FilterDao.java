@@ -18,12 +18,27 @@ public class FilterDao {
 		em = factory.createEntityManager();
 	}
 
-	public void addFilter(Filter f){
+	public void createFilter(Filter f){
 		EntityTransaction et = em.getTransaction();
 		et.begin();
 		em.persist(f);
 		et.commit();
 		em.close();
 		factory.close();
+	}
+	
+	public Filter readFilter(int id){
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+		
+		return null;
+	}
+	
+	public void updateFilter(int id){
+		
+	}
+	
+	public void deleteFilter(int id){
+		
 	}
 }
