@@ -3,7 +3,6 @@ package domain;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,7 +11,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Filter implements Serializable{
+public class FilterEntity implements Serializable{
 	
 	/**
 	 * 
@@ -20,7 +19,7 @@ public class Filter implements Serializable{
 	private static final long serialVersionUID = -8665182375873062581L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private long id;
 	
 	private String name;
@@ -38,11 +37,11 @@ public class Filter implements Serializable{
 	Date changed;
 	
 	
-	public Filter(){
+	public FilterEntity(){
 		
 	}
 	
-	public Filter(String name, int brightness, int contrast, int saturation, int red,
+	public FilterEntity(String name, int brightness, int contrast, int saturation, int red,
 			int green, int blue, boolean negative) {
 		this.name = name;
 		this.brightness = brightness;

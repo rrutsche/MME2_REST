@@ -52,16 +52,16 @@ public class DataProvider {
 		return null;
 	}
 	
-	public FilterDto setFilter(FilterDto newFilter){
-		for (FilterDto filter : filterList) {
-			if(newFilter.getName().equals(filter.getName())){
-				return null;
-			}
-		}
-		newFilter.setId(filterList.size());
-		filterList.add(newFilter.getId(), newFilter);
-		return newFilter;
-	}
+//	public FilterDto setFilter(FilterDto newFilter){
+//		for (FilterDto filter : filterList) {
+//			if(newFilter.getName().equals(filter.getName())){
+//				return null;
+//			}
+//		}
+//		newFilter.setId(filterList.size());
+//		filterList.add(newFilter.getId(), newFilter);
+//		return newFilter;
+//	}
 	
 	public String filterListToString(){
 		StringBuilder back = new StringBuilder();
