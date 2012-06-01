@@ -14,8 +14,12 @@ public class JSONConverter {
 	
 	static ObjectMapper mapper = DataProvider.getInstance().getMapper();
 	
-	public static String filterDtoToJson(Filter filter) throws JsonGenerationException, JsonMappingException, IOException{
+	public static String filterToJson(Filter filter) throws JsonGenerationException, JsonMappingException, IOException{
 		return mapper.writeValueAsString(filter);
+	}
+	
+	public static String filterArrayToJson(Filter[] filters) throws JsonGenerationException, JsonMappingException, IOException{
+		return mapper.writeValueAsString(filters);
 	}
 	
 	public static Filter jsonToFilter(String jsonString) throws JsonParseException, JsonMappingException, IOException{

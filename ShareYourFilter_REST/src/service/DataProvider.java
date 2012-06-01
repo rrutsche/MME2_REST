@@ -37,6 +37,11 @@ public class DataProvider {
 		return filterDao.readFilter(id);
 	}
 	
+	public Filter[] getAllFilters(){
+		filterDao = new FilterDao();
+		return filterDao.getAll();
+	}
+	
 	public FilterDto getFilterByName(String name){
 		for (FilterDto filter : filterList) {
 			if(name.equals(filter.getName())) return filter;

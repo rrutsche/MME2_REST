@@ -21,7 +21,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import util.JSONConverter;
 import domain.Filter;
 
-@Path("/filters/{id}")
+@Path("/filters")
 public class FiltersService {
 	
 	@Context
@@ -32,17 +32,31 @@ public class FiltersService {
 	
 		
 		@GET
-//		@Path("/filters/{name}")
+		@Path("/{id}")
 		@Produces({MediaType.APPLICATION_JSON})
 		public String getFilter(@PathParam("id") long id) throws JsonGenerationException, JsonMappingException, IOException{
 			System.out.println("################################# GET");
 			
 			Filter filter = DataProvider.getInstance().getFilterById(id);
-			
 			if(filter != null){
 				System.out.println(filter.toString());
-				return JSONConverter.filterDtoToJson(filter);
+				return JSONConverter.filterToJson(filter);
 			}
+			return null;
+		}
+		
+		@GET
+		@Produces({MediaType.APPLICATION_JSON})
+		public String getFilters() throws JsonGenerationException, JsonMappingException, IOException{
+			System.out.println("################################# GET");
+			
+			System.out.println("get all");
+			Filter[] filters = DataProvider.getInstance().getAllFilters();
+			
+			if (filters.length > 0) {
+				return JSONConverter.filterArrayToJson(filters);
+			}
+			
 			return null;
 		}
 		
