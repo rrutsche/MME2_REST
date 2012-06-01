@@ -49,15 +49,19 @@ public class DataProvider {
 		return null;
 	}
 	
-	public FilterDto setFilter(FilterDto newFilter){
-		for (FilterDto filter : filterList) {
-			if(newFilter.getName().equals(filter.getName())){
-				return null;
-			}
-		}
-		newFilter.setId(filterList.size());
-		filterList.add(newFilter.getId(), newFilter);
-		return newFilter;
+	public boolean setFilter(Filter newFilter){
+		filterDao = new FilterDao();
+		return filterDao.createFilter(newFilter);
+	}
+	
+	public boolean updateFilter(Filter f){
+		filterDao = new FilterDao();
+		return filterDao.updateFilter(f);
+	}
+	
+	public boolean removeFilter(long id){
+		filterDao = new FilterDao();
+		return filterDao.deleteFilter(id);
 	}
 	
 	public String filterListToString(){
@@ -66,16 +70,6 @@ public class DataProvider {
 			back.append(filter.toString()+"\n");
 		}
 		return back.toString();
-	}
-	
-	public void updateFilter(Filter f){
-		filterDao = new FilterDao();
-		filterDao.updateFilter(f);
-	}
-	
-	public void removeFilter(long id){
-		filterDao = new FilterDao();
-		filterDao.deleteFilter(id);
 	}
 	
 	public boolean nameIsUnique(String name){

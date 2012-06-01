@@ -21,7 +21,7 @@ public class FilterDao {
 		em = factory.createEntityManager();
 	}
 
-	public void createFilter(Filter f){
+	public boolean createFilter(Filter f){
 		
 		EntityTransaction et = em.getTransaction();
 		boolean filterIsUnique = true;
@@ -40,6 +40,7 @@ public class FilterDao {
 		et.commit();
 		em.close();
 		factory.close();
+		return true;
 	}
 	
 	public Filter readFilter(long id){
@@ -55,31 +56,31 @@ public class FilterDao {
 		return filter;
 	}
 	
-	public void updateFilter(Filter f){
+	public boolean updateFilter(Filter f){
 		
-		System.out.println("new filter"+f.toString());
 		EntityTransaction et = em.getTransaction();
 		et.begin();
 		em.merge(f);
 		et.commit();
 		em.close();
 		factory.close();
-		
+		return true;
 	}
 	
-	public void deleteFilter(long id){
+	public boolean deleteFilter(long id){
 		
 		EntityTransaction et = em.getTransaction();
 		et.begin();
 		
 		Filter filter = (Filter) em.find(Filter.class, id);
-		if (filter != null) {
-			em.remove(filter);
+		if (filter == null) {
+			return false;
 		}
-		
+		em.remove(filter);
 		et.commit();
 		em.close();
 		factory.close();
+		return true;
 		
 	}
 	
