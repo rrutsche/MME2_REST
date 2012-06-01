@@ -2,13 +2,9 @@ package service;
 
 import java.util.ArrayList;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-
 import org.codehaus.jackson.map.ObjectMapper;
 
+import domain.Filter;
 import domain.FilterDto;
 
 public class DataProvider {
@@ -16,9 +12,7 @@ public class DataProvider {
 	static private DataProvider instance;
 	static ArrayList<FilterDto> filterList;
 	static ObjectMapper mapper; 
-	static EntityManagerFactory factory;
-    static EntityManager em; 
-	
+	static FilterDao filterDao;
 
 	private DataProvider(){
 		filterList = new ArrayList<FilterDto>();
@@ -38,11 +32,9 @@ public class DataProvider {
 		return mapper;
 	}
 	
-	public FilterDto getFilterById(int i){
-		for (FilterDto filter : filterList) {
-			if(filter.getId() == i) return filter;
-		}
-		return null;
+	public Filter getFilterById(long id){
+		filterDao = new FilterDao();
+		return filterDao.readFilter(id);
 	}
 	
 	public FilterDto getFilterByName(String name){
@@ -52,16 +44,16 @@ public class DataProvider {
 		return null;
 	}
 	
-//	public FilterDto setFilter(FilterDto newFilter){
-//		for (FilterDto filter : filterList) {
-//			if(newFilter.getName().equals(filter.getName())){
-//				return null;
-//			}
-//		}
-//		newFilter.setId(filterList.size());
-//		filterList.add(newFilter.getId(), newFilter);
-//		return newFilter;
-//	}
+	public FilterDto setFilter(FilterDto newFilter){
+		for (FilterDto filter : filterList) {
+			if(newFilter.getName().equals(filter.getName())){
+				return null;
+			}
+		}
+		newFilter.setId(filterList.size());
+		filterList.add(newFilter.getId(), newFilter);
+		return newFilter;
+	}
 	
 	public String filterListToString(){
 		StringBuilder back = new StringBuilder();
@@ -71,15 +63,14 @@ public class DataProvider {
 		return back.toString();
 	}
 	
-	public void removeFilter(String name){
-		for (int i = 0; i < filterList.size(); i++) {
-			if(name.equals(filterList.get(i).getName())){
-				filterList.remove(i);
-				break;
-			}
-			System.out.println("filterList after removing object: \n");
-			System.out.println(filterListToString());
-		}
+	public void updateFilter(Filter f){
+		filterDao = new FilterDao();
+		filterDao.updateFilter(f);
+	}
+	
+	public void removeFilter(long id){
+		filterDao = new FilterDao();
+		filterDao.deleteFilter(id);
 	}
 	
 	public boolean nameIsUnique(String name){

@@ -42,14 +42,22 @@ public class FilterDao {
 		factory.close();
 	}
 	
-	public Filter readFilter(int id){
+	public Filter readFilter(long id){
+		
 		EntityTransaction et = em.getTransaction();
 		et.begin();
 		
-		return null;
+		Filter filter = (Filter) em.find(Filter.class, id);
+		
+		et.commit();
+		em.close();
+		factory.close();
+		return filter;
 	}
 	
 	public void updateFilter(Filter f){
+		
+		System.out.println("new filter"+f.toString());
 		EntityTransaction et = em.getTransaction();
 		et.begin();
 		em.merge(f);
@@ -59,7 +67,19 @@ public class FilterDao {
 		
 	}
 	
-	public void deleteFilter(int id){
+	public void deleteFilter(long id){
+		
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+		
+		Filter filter = (Filter) em.find(Filter.class, id);
+		if (filter != null) {
+			em.remove(filter);
+		}
+		
+		et.commit();
+		em.close();
+		factory.close();
 		
 	}
 	

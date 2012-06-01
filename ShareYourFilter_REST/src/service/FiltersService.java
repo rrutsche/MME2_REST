@@ -2,7 +2,6 @@ package service;
 
 import java.io.IOException;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -20,11 +19,9 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 
 import util.JSONConverter;
+import domain.Filter;
 
-
-import domain.FilterDto;
-
-@Path("/filters/{name}")
+@Path("/filters/{id}")
 public class FiltersService {
 	
 	@Context
@@ -37,11 +34,13 @@ public class FiltersService {
 		@GET
 //		@Path("/filters/{name}")
 		@Produces({MediaType.APPLICATION_JSON})
-		public String getFilter(@PathParam("name") String name) throws JsonGenerationException, JsonMappingException, IOException{
+		public String getFilter(@PathParam("id") long id) throws JsonGenerationException, JsonMappingException, IOException{
 			System.out.println("################################# GET");
 			
-			FilterDto filter = DataProvider.getInstance().getFilterByName(name);
-			if(null != filter){
+			Filter filter = DataProvider.getInstance().getFilterById(id);
+			
+			if(filter != null){
+				System.out.println(filter.toString());
 				return JSONConverter.filterDtoToJson(filter);
 			}
 			return null;
@@ -64,11 +63,10 @@ public class FiltersService {
 		
 		@POST
 		@Produces(MediaType.TEXT_HTML)
-		public void updateFilter(@PathParam("name") String name, String jsonString) throws JsonParseException, JsonMappingException, IOException{
+		public void updateFilter(@PathParam("id") long id, String jsonString) throws JsonParseException, JsonMappingException, IOException{
 			System.out.println("################################# POST");
 			
-			FilterDao fd = new FilterDao();
-			fd.updateFilter(JSONConverter.jsonToFilter(jsonString));
+			DataProvider.getInstance().updateFilter(JSONConverter.jsonToFilter(jsonString));
 			
 //			FilterDto newFilterObject = JSONConverter.jsonToFilter(jsonString);
 //			FilterDto oldFilterObject = DataProvider.getInstance().getFilterByName(name);
@@ -95,12 +93,9 @@ public class FiltersService {
 		
 		@DELETE
 		@Produces(MediaType.TEXT_HTML)
-		public void deleteFilter(@PathParam("name") String name){
+		public void deleteFilter(@PathParam("id") long id){
 			System.out.println("################################# DELETE");
 			
-			DataProvider.getInstance().removeFilter(name);
-			
-			System.out.println("FilterList:\n");
-			System.out.println(DataProvider.getInstance().filterListToString());
+			DataProvider.getInstance().removeFilter(id);
 		}
 }
