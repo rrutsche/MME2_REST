@@ -2,9 +2,8 @@ package domain;
 
 import java.util.Date;
 
-
 public class FilterDto {
-	
+
 	private int id;
 	private String name;
 	private int brightness;
@@ -16,13 +15,13 @@ public class FilterDto {
 	private boolean negative;
 	Date created;
 	Date changed;
-	
-	public FilterDto(){
-		
+
+	public FilterDto() {
+
 	}
-	
-	public FilterDto(String name, int brightness, int contrast, int saturation, int red,
-			int green, int blue, boolean negative) {
+
+	public FilterDto(String name, int brightness, int contrast, int saturation,
+			int red, int green, int blue, boolean negative) {
 		this.name = name;
 		this.brightness = brightness;
 		this.contrast = contrast;
@@ -33,7 +32,7 @@ public class FilterDto {
 		this.negative = negative;
 		created = getCurrentDate();
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -45,12 +44,12 @@ public class FilterDto {
 	public int getId() {
 		return id;
 	}
-	
-	public void setId(int i){
+
+	public void setId(int i) {
 		this.id = i;
 	}
 
-	private Date getCurrentDate(){
+	private Date getCurrentDate() {
 		return new Date();
 	}
 
@@ -124,7 +123,7 @@ public class FilterDto {
 	public Date getChanged() {
 		return changed;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Filter [id=" + id + ", name=" + name + ", brightness="
@@ -133,5 +132,5 @@ public class FilterDto {
 				+ blue + ", negative=" + negative + ", created=" + created
 				+ ", changed=" + changed + "]";
 	}
-	
+
 }

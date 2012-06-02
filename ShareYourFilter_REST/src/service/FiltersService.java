@@ -71,7 +71,6 @@ public class FiltersService {
 	}
 
 	@PUT
-	@Path("/{id}")
 	@Produces(MediaType.TEXT_HTML)
 	public String setFilter(String jsonString) throws JsonParseException,
 			JsonMappingException, IOException {

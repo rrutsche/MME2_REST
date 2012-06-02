@@ -3,26 +3,24 @@ package domain;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Filter implements Serializable{
-	
+public class Filter implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -8665182375873062581L;
-	
+
 	@Id
 	@GeneratedValue
 	private long id;
-	
+
 	private String name;
 	private int brightness;
 	private int contrast;
@@ -31,19 +29,19 @@ public class Filter implements Serializable{
 	private int green;
 	private int blue;
 	private boolean negative;
-	
+	private float[] random;
+
 	@Temporal(TemporalType.DATE)
 	Date created;
 	@Temporal(TemporalType.DATE)
 	Date changed;
-	
-	
-	public Filter(){
-		
+
+	public Filter() {
+
 	}
-	
-	public Filter(String name, int brightness, int contrast, int saturation, int red,
-			int green, int blue, boolean negative) {
+
+	public Filter(String name, int brightness, int contrast, int saturation,
+			int red, int green, int blue, boolean negative) {
 		this.name = name;
 		this.brightness = brightness;
 		this.contrast = contrast;
@@ -54,21 +52,20 @@ public class Filter implements Serializable{
 		this.negative = negative;
 		created = getCurrentDate();
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public long getId() {
 		return id;
 	}
 
-	private Date getCurrentDate(){
+	private Date getCurrentDate() {
 		return new Date();
 	}
 
@@ -143,6 +140,14 @@ public class Filter implements Serializable{
 		return changed;
 	}
 
+	public float[] getRandom() {
+		return random;
+	}
+
+	public void setRandom(float[] random) {
+		this.random = random;
+	}
+
 	@Override
 	public String toString() {
 		return "Filter [id=" + id + ", name=" + name + ", brightness="
@@ -151,6 +156,5 @@ public class Filter implements Serializable{
 				+ blue + ", negative=" + negative + ", created=" + created
 				+ ", changed=" + changed + "]";
 	}
-	
-	
+
 }
