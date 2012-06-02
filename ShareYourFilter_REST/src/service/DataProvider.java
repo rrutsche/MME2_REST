@@ -8,73 +8,74 @@ import domain.Filter;
 import domain.FilterDto;
 
 public class DataProvider {
-	
+
 	static private DataProvider instance;
 	static ArrayList<FilterDto> filterList;
-	static ObjectMapper mapper; 
+	static ObjectMapper mapper;
 	static FilterDao filterDao;
 
-	private DataProvider(){
+	private DataProvider() {
 		filterList = new ArrayList<FilterDto>();
 		mapper = new ObjectMapper();
 	}
-	
-	static public DataProvider getInstance(){
-		if(instance == null){
+
+	static public DataProvider getInstance() {
+		if (instance == null) {
 			instance = new DataProvider();
 			return instance;
-		}else{
+		} else {
 			return instance;
 		}
 	}
-	
+
 	public ObjectMapper getMapper() {
 		return mapper;
 	}
-	
-	public Filter getFilterById(long id){
+
+	public Filter getFilterById(long id) {
 		filterDao = new FilterDao();
 		return filterDao.readFilter(id);
 	}
-	
-	public Filter[] getAllFilters(){
+
+	public Filter[] getAllFilters() {
 		filterDao = new FilterDao();
 		return filterDao.getAll();
 	}
-	
-	public FilterDto getFilterByName(String name){
+
+	public FilterDto getFilterByName(String name) {
 		for (FilterDto filter : filterList) {
-			if(name.equals(filter.getName())) return filter;
+			if (name.equals(filter.getName()))
+				return filter;
 		}
 		return null;
 	}
-	
-	public boolean setFilter(Filter newFilter){
+
+	public boolean setFilter(Filter newFilter) {
 		filterDao = new FilterDao();
 		return filterDao.createFilter(newFilter);
 	}
-	
-	public boolean updateFilter(Filter f){
+
+	public boolean updateFilter(Filter f) {
 		filterDao = new FilterDao();
 		return filterDao.updateFilter(f);
 	}
-	
-	public boolean removeFilter(long id){
+
+	public boolean removeFilter(long id) {
 		filterDao = new FilterDao();
 		return filterDao.deleteFilter(id);
 	}
-	
-	public String filterListToString(){
+
+	public String filterListToString() {
 		StringBuilder back = new StringBuilder();
 		for (FilterDto filter : filterList) {
-			back.append(filter.toString()+"\n");
+			back.append(filter.toString() + "\n");
 		}
 		return back.toString();
 	}
-	
-	public boolean nameIsUnique(String name){
+
+	public boolean nameIsUnique(String name) {
 		for (FilterDto filter : filterList) {
-			if(name.equals(filter.getName())){
+			if (name.equals(filter.getName())) {
 				return false;
 			}
 		}

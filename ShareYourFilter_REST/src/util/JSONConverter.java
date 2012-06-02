@@ -13,20 +13,23 @@ import domain.FilterListSuccess;
 import domain.FilterSuccess;
 
 public class JSONConverter {
-	
+
 	static ObjectMapper mapper = DataProvider.getInstance().getMapper();
-	
-	public static String filterToJson(FilterSuccess message) throws JsonGenerationException, JsonMappingException, IOException{
+
+	public static String filterToJson(FilterSuccess message)
+			throws JsonGenerationException, JsonMappingException, IOException {
 		return mapper.writeValueAsString(message);
 	}
-	
-	public static String filterArrayToJson(FilterListSuccess message) throws JsonGenerationException, JsonMappingException, IOException{
+
+	public static String filterArrayToJson(FilterListSuccess message)
+			throws JsonGenerationException, JsonMappingException, IOException {
 		return mapper.writeValueAsString(message);
 	}
-	
-	public static Filter jsonToFilter(String jsonString) throws JsonParseException, JsonMappingException, IOException{
+
+	public static Filter jsonToFilter(String jsonString)
+			throws JsonParseException, JsonMappingException, IOException {
 		Filter filter = mapper.readValue(jsonString, Filter.class);
 		return filter;
 	}
-	
+
 }

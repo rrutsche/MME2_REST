@@ -11,29 +11,29 @@ import javax.persistence.Persistence;
 import domain.Filter;
 
 public class FilterDao {
-	
+
 	private static String PERSISTENCE_UNIT_NAME = "persistence";
 	EntityManager em;
 	EntityManagerFactory factory;
-	
+
 	public FilterDao() {
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		em = factory.createEntityManager();
 	}
 
-	public boolean createFilter(Filter f){
-		
+	public boolean createFilter(Filter f) {
+
 		EntityTransaction et = em.getTransaction();
 		boolean filterIsUnique = true;
 		et.begin();
 
 		Filter[] filters = getAll();
 		for (Filter filter : filters) {
-			if (filter.getName().equals(f.getName())){
+			if (filter.getName().equals(f.getName())) {
 				filterIsUnique = false;
 			}
 		}
-		
+
 		if (filterIsUnique) {
 			em.persist(f);
 		}
@@ -42,22 +42,22 @@ public class FilterDao {
 		factory.close();
 		return true;
 	}
-	
-	public Filter readFilter(long id){
-		
+
+	public Filter readFilter(long id) {
+
 		EntityTransaction et = em.getTransaction();
 		et.begin();
-		
-		Filter filter = (Filter) em.find(Filter.class, id);
-		
+
+		Filter filter = em.find(Filter.class, id);
+
 		et.commit();
 		em.close();
 		factory.close();
 		return filter;
 	}
-	
-	public boolean updateFilter(Filter f){
-		
+
+	public boolean updateFilter(Filter f) {
+
 		EntityTransaction et = em.getTransaction();
 		et.begin();
 		em.merge(f);
@@ -66,31 +66,33 @@ public class FilterDao {
 		factory.close();
 		return true;
 	}
-	
-	public boolean deleteFilter(long id){
-		
+
+	public boolean deleteFilter(long id) {
+
 		EntityTransaction et = em.getTransaction();
 		et.begin();
-		
-		Filter filter = (Filter) em.find(Filter.class, id);
+
+		Filter filter = em.find(Filter.class, id);
 		if (filter == null) {
 			return false;
 		}
+
 		em.remove(filter);
 		et.commit();
 		em.close();
 		factory.close();
 		return true;
-		
+
 	}
-	
+
 	public Filter[] getAll() {
 		ArrayList<Filter> filters = new ArrayList<Filter>();
-		
-		List<?> loadedFilters = em.createQuery("select f from Filter f").getResultList();
-		
-		for (Object filter: loadedFilters) {
-			if(filter instanceof Filter){
+
+		List<?> loadedFilters = em.createQuery("select f from Filter f")
+				.getResultList();
+
+		for (Object filter : loadedFilters) {
+			if (filter instanceof Filter) {
 				Filter loadedFilter = (Filter) filter;
 				filters.add(loadedFilter);
 				System.out.println(loadedFilter.getName());

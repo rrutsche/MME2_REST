@@ -40,6 +40,7 @@ public class FiltersService {
 
 		Filter filter = DataProvider.getInstance().getFilterById(id);
 		FilterSuccess message = new FilterSuccess();
+
 		if (filter != null) {
 			message.setSuccess(true).setMessage("").setFilter(filter);
 			return JSONConverter.filterToJson(message);
@@ -72,8 +73,8 @@ public class FiltersService {
 	@PUT
 	@Path("/{id}")
 	@Produces(MediaType.TEXT_HTML)
-	public String setFilter(@PathParam("name") String name, String jsonString)
-			throws JsonParseException, JsonMappingException, IOException {
+	public String setFilter(String jsonString) throws JsonParseException,
+			JsonMappingException, IOException {
 		System.out.println("################################# PUT");
 
 		boolean success = DataProvider.getInstance().setFilter(
@@ -93,10 +94,9 @@ public class FiltersService {
 	}
 
 	@POST
-	@Path("/{id}")
 	@Produces(MediaType.TEXT_HTML)
-	public String updateFilter(@PathParam("id") long id, String jsonString)
-			throws JsonParseException, JsonMappingException, IOException {
+	public String updateFilter(String jsonString) throws JsonParseException,
+			JsonMappingException, IOException {
 		System.out.println("################################# POST");
 
 		boolean success = DataProvider.getInstance().updateFilter(
@@ -118,7 +118,8 @@ public class FiltersService {
 	@DELETE
 	@Path("/{id}")
 	@Produces(MediaType.TEXT_HTML)
-	public String deleteFilter(@PathParam("id") long id) throws JsonGenerationException, JsonMappingException, IOException {
+	public String deleteFilter(@PathParam("id") long id)
+			throws JsonGenerationException, JsonMappingException, IOException {
 		System.out.println("################################# DELETE");
 
 		boolean success = DataProvider.getInstance().removeFilter(id);
